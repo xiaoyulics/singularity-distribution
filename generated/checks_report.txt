@@ -1,0 +1,79 @@
+== 1. Regression targets (independent recomputation) ==
+[PASS] Table 2 row h=0.01 -- max rel. deviation 9.13e-07
+[PASS] detection boundary pair h=0.01 -- n*=130, err_(n*-1)=0.0519125985, err_n*=0.0499224543
+[PASS] Table 2 row h=0.1 -- max rel. deviation 2.58e-07
+[PASS] detection boundary pair h=0.1 -- n*=30, err_(n*-1)=0.0537598323, err_n*=0.0450550960
+[PASS] Table 2 row h=1.0 -- max rel. deviation 1.88e-08
+[PASS] detection boundary pair h=1.0 -- n*=9, err_(n*-1)=0.0640638411, err_n*=0.0332400713
+[PASS] Table 2 row h=9.0 -- max rel. deviation 2.47e-08
+[PASS] detection boundary pair h=9.0 -- n*=5, err_(n*-1)=0.0643521827, err_n*=0.0135817219
+
+== 2. Precision-doubling checks ==
+[PASS] cdf at Q05, h=0.01: dps 172 vs 344 -- F=0.050000000008, |diff|=2.13e-58
+[PASS] cdf at Q95, h=0.01: dps 151 vs 302 -- F=0.950000000007, |diff|=8.08e-41
+[PASS] P(zeta<=12) h=0.01 stable under precision doubling -- 1.16127894e-13 (rel diff 2.82e-85)
+[PASS] cdf at Q05, h=0.1: dps 90 vs 180 -- F=0.0499999999985, |diff|=7.92e-78
+[PASS] cdf at Q95, h=0.1: dps 90 vs 180 -- F=0.950000000001, |diff|=2.91e-84
+[PASS] P(zeta<=12) h=0.1 stable under precision doubling -- 0.007423801919 (rel diff 3.39e-116)
+[PASS] cdf at Q05, h=1.0: dps 90 vs 180 -- F=0.0499999999988, |diff|=3.05e-90
+[PASS] cdf at Q95, h=1.0: dps 90 vs 180 -- F=0.95, |diff|=3.18e-92
+[PASS] P(zeta<=12) h=1.0 stable under precision doubling -- 0.1400149974 (rel diff 1.31e-128)
+[PASS] cdf at Q05, h=9.0: dps 90 vs 180 -- F=0.0500000000012, |diff|=5.39e-92
+[PASS] cdf at Q95, h=9.0: dps 90 vs 180 -- F=0.95, |diff|=3.68e-92
+[PASS] P(zeta<=12) h=9.0 stable under precision doubling -- 0.1963899351 (rel diff 4.95e-131)
+
+-- near-one normalisation (q = (1.01)^(-0.39) = 0.996127) --
+[PASS] P(zbar>0)=1 at 312 digits -- |1-S(0)| = 2.75e-40
+[PASS] P(zbar>0)=1 at 624 digits -- |1-S(0)| = 3.16e-352
+
+== 3. Density, monotonicity and moments ==
+[PASS] h=0.1: CDF monotone on grid
+[PASS] h=0.1: density >= 0 on grid -- min 3.46e-30
+[PASS] h=0.1: moments 0..3 by quadrature vs n!/(q;q)_n -- rel. errors 0.0e+00, 0.0e+00, 1.5e-16, 1.7e-16
+[PASS] h=1.0: CDF monotone on grid
+[PASS] h=1.0: density >= 0 on grid -- min -6.05e-67
+[PASS] h=1.0: moments 0..3 by quadrature vs n!/(q;q)_n -- rel. errors 0.0e+00, 2.1e-16, 0.0e+00, 0.0e+00
+[PASS] h=9.0: CDF monotone on grid
+[PASS] h=9.0: density >= 0 on grid -- min 1.34e-16
+[PASS] h=9.0: moments 0..3 by quadrature vs n!/(q;q)_n -- rel. errors 0.0e+00, 1.3e-16, 0.0e+00, 1.4e-16
+
+== 4. Monte Carlo cross-checks (reported with standard errors) ==
+[PASS] MC h=0.1 (N=100000): mean, 5%/95% CDF, P(<=12) -- z-scores -0.00, -0.65, +0.22, +2.27
+[PASS] MC h=1.0 (N=200000): mean, 5%/95% CDF, P(<=12) -- z-scores +1.26, -1.63, +0.25, -0.73
+[PASS] MC h=9.0 (N=200000): mean, 5%/95% CDF, P(<=12) -- z-scores -0.01, -1.73, +1.26, -0.33
+  (h=0.01: P(zeta<=12)=1.2e-13 is far below Monte Carlo resolution; validated by precision doubling only)
+[PASS] MC detection errors h=1.0, n=9 -- type I 0.03317, type II 0.03331, exact 0.03324 (SE 0.00028)
+[PASS] Theorem bounds bracket n* (h=1.0) -- 5.1 <= 9 <= 16
+[PASS] MC detection errors h=9.0, n=5 -- type I 0.01383, type II 0.01357, exact 0.01358 (SE 0.00018)
+[PASS] Theorem bounds bracket n* (h=9.0) -- 2.3 <= 5 <= 9
+[PASS] MC detection errors h=0.1, n=30 -- type I 0.04545, type II 0.04490, exact 0.04506 (SE 0.00033)
+[PASS] Theorem bounds bracket n* (h=0.1) -- 19.1 <= 30 <= 48
+  pathwise E[(zeta-T_9)/zeta] = 0.09880 +- 0.00011 (N=200000) vs ratio of means q^9 = 0.08778
+[PASS] ratio of means differs from mean of ratios (R03)
+
+== 5. Illustrative prior on r ==
+[PASS] prior quantities vs independent values -- max rel. dev 5.1e-08
+
+== 6. Exact Pareto constant (Proposition 4.6), eps ~ Uniform(0,1), h = 1, q0 = 1 ==
+  t=    25:  t P(zeta>t | eps>0) = 1.48939   (limit 1/log 2 = 1.44270; tail bound 1.3e-01)
+  t=    50:  t P(zeta>t | eps>0) = 1.46513   (limit 1/log 2 = 1.44270; tail bound 5.1e-04)
+  t=   100:  t P(zeta>t | eps>0) = 1.45371   (limit 1/log 2 = 1.44270; tail bound 3.8e-09)
+  t=   200:  t P(zeta>t | eps>0) = 1.44826   (limit 1/log 2 = 1.44270; tail bound 1.0e-19)
+[PASS] E1 numerics approach pi(0)/(q0 log(1+h))
+
+== 7. Explicit non-lattice example (Corollary 3.6): Y ~ Beta(b,1) => zbar ~ Gamma(b+1,1) ==
+[PASS] b=0.5: KS test of perpetuity vs Gamma(1.5) -- KS stat 0.0029, p=0.352; mean 1.4957 vs 1.5
+[PASS] b=0.5: perpetuity transform identity at s=0.7
+[PASS] b=2.0: KS test of perpetuity vs Gamma(3.0) -- KS stat 0.0016, p=0.960; mean 3.0005 vs 3.0
+[PASS] b=2.0: perpetuity transform identity at s=0.7
+[PASS] b=5.0: KS test of perpetuity vs Gamma(6.0) -- KS stat 0.0036, p=0.153; mean 6.0078 vs 6.0
+[PASS] b=5.0: perpetuity transform identity at s=0.7
+
+== 8. Mellin/Gamma coefficient ==
+[PASS] E[zbar^{-2 pi i/ell}] = Gamma(1-2 pi i/ell) at ell = log 10 -- quadrature (0.04107978474 - 0.03945354694j) vs (0.04107978474 - 0.03945354694j)
+
+== 9. Delay-equation grid refinement (explicit Euler on log scale) ==
+[PASS] D=1.0: relative change of log A(t) at t=10..40 under halving dt -- 2e-3->1e-3: 2.81e-04; 1e-3->5e-4: 1.40e-04
+[PASS] D=3.0: relative change of log A(t) at t=10..40 under halving dt -- 2e-3->1e-3: 2.18e-05; 1e-3->5e-4: 1.09e-05
+
+finished in 38s; 0 failure(s)
