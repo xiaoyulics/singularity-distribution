@@ -12,7 +12,7 @@
 
 <p align="center">
   <a href="paper/The_Singularity_Has_a_Distribution.pdf"><b>Paper (PDF)</b></a> &nbsp;·&nbsp;
-  <a href="https://xiaoyulics.github.io/singularity-distribution/"><b>Interactive project page</b></a> &nbsp;·&nbsp;
+  <a href="https://xiaoyulics.com/singularity-distribution/"><b>Interactive project page</b></a> &nbsp;·&nbsp;
   <a href="#reproduce-every-number"><b>Reproduce</b></a> &nbsp;·&nbsp;
   <a href="#citation"><b>Cite</b></a>
 </p>
@@ -69,7 +69,7 @@ Central values $\lambda=1.40$, $\beta=1.01$ from Chan et al. (2026), and capabil
 | <img src="docs/assets/figs/fig_detection.png" alt="The cube-root law of fixed-sample detection"> | <img src="docs/assets/figs/fig_frictions.png" alt="Deterministic delayed model and race regimes"> |
 | The cube-root law of detection | Delays and the oversight race |
 
-The [project page](https://xiaoyulics.github.io/singularity-distribution/) makes these interactive: roll your own histories and watch them fill the exact law, or move the idea size and read off the detection threshold.
+The [project page](https://xiaoyulics.com/singularity-distribution/) makes these interactive: roll your own histories and watch them fill the exact law, or move the idea size and read off the detection threshold.
 
 ## Reproduce every number
 
