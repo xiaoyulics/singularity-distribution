@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Singularity Has a Distribution</title>
+<meta name="description" content="An exactly solvable stochastic model of an intelligence explosion: the law of its date, how far away it always is, and how early anyone could tell.">
+<meta property="og:title" content="The Singularity Has a Distribution">
+<meta property="og:description" content="Exact timing laws and detection limits for a stochastic intelligence explosion.">
+<meta property="og:image" content="assets/hero.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script src="assets/data.js"></script>
+<style>
+:root{
+  --night:#0b0d13; --night-2:#121520; --night-3:#1a1e2b;
+  --paper:#f2ece1; --paper-2:#e8e0d1;
+  --ink:#16181f; --ink-2:#4a4740;
+  --cream:#efe6d6; --cream-2:#b8ad9b;
+  --ember:#e0703a; --ember-ink:#b5441d; --gold:#f2c27a; --ice:#9fbde6;
+  --blue:#3987e5; --aqua:#199e70;
+  --serif:"Crimson Pro","Cochineal",Georgia,serif;
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --wrap:1220px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--night);color:var(--cream);font-family:var(--serif);font-size:20px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
+::selection{background:var(--ember);color:#fff}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 32px}
+@media (max-width:640px){.wrap{padding:0 18px}body{font-size:18px}}
+
+/* ---------- the q-ruler: reading progress on a geometric clock ---------- */
+.clock{position:fixed;top:0;left:0;right:0;height:46px;z-index:20;background:rgba(11,13,19,.86);backdrop-filter:blur(6px);display:flex;align-items:center}
+.clock .wrap{display:flex;align-items:center;gap:22px;width:100%}
+.clock .name{font-family:var(--sans);font-size:13px;letter-spacing:.02em;white-space:nowrap;color:var(--cream)}
+.clock svg{flex:1;height:22px;min-width:120px}
+.clock nav{display:flex;gap:16px;font-family:var(--sans);font-size:13px}
+.clock nav a{text-decoration:none;color:var(--cream-2)}
+.clock nav a:hover{color:var(--cream)}
+@media (max-width:760px){.clock .name{display:none}}
+
+/* ---------- hero ---------- */
+.hero{padding:120px 0 0}
+.hero h1{font-weight:500;font-size:clamp(46px,7.2vw,108px);line-height:.98;letter-spacing:-.015em;margin:0}
+.hero .lede{font-size:clamp(20px,2.1vw,26px);line-height:1.45;max-width:36em;margin:30px 0 0;color:var(--cream)}
+.actions{display:flex;flex-wrap:wrap;gap:14px;margin:34px 0 0}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--sans);font-size:16px;font-weight:500;padding:14px 22px;border-radius:999px;text-decoration:none;border:1px solid transparent;cursor:pointer;background:none;color:inherit}
+.btn.primary{background:var(--ember);color:#1a0d06}
+.btn.primary:hover{background:#ea8150}
+.btn.ghost{border-color:#4a4d5a;color:var(--cream)}
+.btn.ghost:hover{border-color:var(--cream-2)}
+.authors{font-family:var(--sans);font-size:15px;color:var(--cream-2);margin:34px 0 0;line-height:1.7}
+.authors b{color:var(--cream);font-weight:500}
+.authors sup{color:var(--ember);font-size:.7em}
+.hero figure{margin:56px 0 0;padding:0}
+.hero figure img{display:block;width:100%;height:auto}
+.hero figcaption{font-family:var(--sans);font-size:14px;line-height:1.55;color:var(--cream-2);max-width:var(--wrap);margin:14px auto 0;padding:0 32px}
+
+/* ---------- fields ---------- */
+section{padding:120px 0}
+section.paper{background:var(--paper);color:var(--ink)}
+section.deep{background:var(--night-2)}
+h2{font-weight:500;font-size:clamp(36px,4.6vw,64px);line-height:1.04;letter-spacing:-.01em;margin:0 0 28px;max-width:24ch}
+.cols h2,.midnight h2{max-width:none}
+h3{font-family:var(--sans);font-weight:600;font-size:19px;margin:0 0 10px}
+p{margin:0 0 18px}
+.lead{font-size:clamp(21px,2vw,25px);line-height:1.5;max-width:34em}
+.note{font-family:var(--sans);font-size:15px;line-height:1.6;color:var(--ink-2)}
+section:not(.paper) .note,footer .note{color:var(--cream-2)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.cols.wide-left{grid-template-columns:1.25fr 1fr}
+@media (max-width:900px){.cols,.cols.wide-left{grid-template-columns:1fr;gap:36px}}
+.eq{font-size:22px;overflow-x:auto;overflow-y:hidden;padding:4px 0;max-width:100%}
+.katex-display{overflow-x:auto;overflow-y:hidden;padding:2px 0}
+.cols > *,.duel > *,.sheet > *,.lab > *,.brake > *,.midnight > *,.readout > *,.figs3 > *{min-width:0}
+html,body{overflow-x:clip}
+@media (max-width:640px){.eq{font-size:18px}.hero h1{font-size:44px}h2{font-size:34px}}
+.paper .eq .katex{color:var(--ink)}
+
+/* the two laws side by side */
+.duel{display:grid;grid-template-columns:1fr 1fr;border-top:2px solid var(--ink);margin-top:48px}
+.duel > div{padding:28px 32px 6px 0}
+.duel > div + div{padding-left:32px;border-left:1px solid #cfc5b3}
+@media (max-width:900px){.duel{grid-template-columns:1fr}.duel > div + div{padding-left:0;border-left:0;border-top:1px solid #cfc5b3}}
+.big{font-size:clamp(54px,7vw,96px);line-height:1;font-weight:500;letter-spacing:-.02em}
+.big small{display:block;font-size:max(15px,.22em);letter-spacing:0;font-family:var(--sans);font-weight:400;margin-top:10px;opacity:.85}
+
+/* ---------- live: roll a history ---------- */
+.lab{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;margin-top:40px}
+@media (max-width:980px){.lab{grid-template-columns:1fr}}
+.panel{background:var(--night);border-radius:6px;padding:18px 18px 12px}
+.panel canvas,.panel svg{display:block;width:100%}
+.panel .cap{font-family:var(--sans);font-size:13px;color:var(--cream-2);margin:8px 2px 0}
+.controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin-top:30px;font-family:var(--sans)}
+.seg{display:inline-flex;border:1px solid #3c4050;border-radius:999px;overflow:hidden}
+.seg button{background:none;border:0;color:var(--cream-2);font:500 15px var(--sans);padding:10px 15px;cursor:pointer;min-width:48px}
+.seg button[aria-pressed="true"]{background:var(--cream);color:var(--night)}
+.readout{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:30px}
+@media (max-width:700px){.readout{grid-template-columns:1fr 1fr}}
+.readout div{border-top:1px solid #343848;padding-top:12px}
+.readout .v{font-size:clamp(30px,3.4vw,44px);line-height:1.05}
+.readout .k{font-family:var(--sans);font-size:14px;color:var(--cream-2);margin-top:6px}
+
+/* ---------- tables ---------- */
+table{border-collapse:collapse;width:100%;font-family:var(--sans);font-size:16px;font-variant-numeric:tabular-nums}
+th{text-align:left;font-weight:500;padding:10px 12px;border-bottom:2px solid currentColor}
+td{padding:10px 12px;border-bottom:1px solid rgba(120,110,95,.35)}
+td.r,th.r{text-align:right}
+.tablewrap{overflow-x:auto;margin-top:34px}
+
+/* ---------- formula sheet ---------- */
+.sheet{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;margin-top:44px;border-top:2px solid var(--ink)}
+.sheet > div{padding:24px 28px 18px 0;border-bottom:1px solid #cfc5b3}
+.sheet > div:nth-child(2n){padding-left:28px;padding-right:0;border-left:1px solid #cfc5b3}
+@media (max-width:900px){.sheet{grid-template-columns:1fr}.sheet > div:nth-child(2n){padding-left:0;border-left:0}}
+.sheet h3{margin-bottom:6px}
+.sheet .eq{font-size:20px}
+
+/* ---------- midnight ---------- */
+.midnight{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:56px}
+.midnight img{width:100%;height:auto;display:block;border-radius:4px}
+@media (max-width:900px){.midnight{grid-template-columns:1fr}}
+.figs3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:40px}
+@media (max-width:900px){.figs3{grid-template-columns:1fr}}
+.figs3 div{border-top:1px solid #343848;padding-top:14px}
+
+/* ---------- detection ---------- */
+.slider{width:100%;accent-color:var(--ember-ink);margin:10px 0 4px}
+.ticks{display:flex;justify-content:space-between;font-family:var(--sans);font-size:12px;color:var(--ink-2)}
+.paper .panel{background:#fbf8f2;border:1px solid #ddd3c1}
+.paper .panel .cap{color:var(--ink-2)}
+.paper .readout div{border-top-color:#cfc5b3}
+.paper .readout .k{color:var(--ink-2)}
+
+/* ---------- brakes ---------- */
+.brakes{display:grid;gap:0;margin-top:44px}
+.brake{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:40px;padding:36px 0;border-top:1px solid #343848;align-items:center}
+.brake:nth-child(2) {grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}
+.brake:nth-child(2) .txt{order:2}
+@media (max-width:900px){.brake,.brake:nth-child(2){grid-template-columns:1fr}.brake:nth-child(2) .txt{order:0}}
+
+/* ---------- code, cite, footer ---------- */
+pre{font-family:var(--mono);font-size:14.5px;line-height:1.6;background:var(--night-3);color:var(--cream);padding:20px 22px;border-radius:6px;overflow-x:auto;margin:0}
+.paper pre{background:#1a1d27}
+.copy{font:500 14px var(--sans);background:none;border:1px solid #4a4d5a;color:inherit;border-radius:999px;padding:8px 14px;cursor:pointer;margin-top:12px}
+.paper .copy{border-color:#b9ae9c}
+.checks{columns:2;column-gap:40px;font-family:var(--sans);font-size:16px;line-height:1.6;padding-left:20px;margin:0}
+@media (max-width:700px){.checks{columns:1}}
+footer{padding:80px 0 60px;background:var(--night)}
+footer .ruler svg{width:100%;height:60px;display:block}
+footer p{font-family:var(--sans);font-size:14px;color:var(--cream-2)}
+.tip{position:fixed;pointer-events:none;background:#fbf8f2;color:#16181f;font:500 13px var(--sans);padding:7px 10px;border-radius:4px;box-shadow:0 4px 18px rgba(0,0,0,.25);opacity:0;transition:opacity .12s;z-index:30;white-space:nowrap}
+</style>
+</head>
+<body>
+
+<div class="clock" role="navigation" aria-label="Reading progress">
+  <div class="wrap">
+    <span class="name">The Singularity Has a Distribution</span>
+    <svg id="clock" viewBox="0 0 1000 22" preserveAspectRatio="none" aria-hidden="true"></svg>
+    <nav><a href="https://github.com/xiaoyulics/singularity-distribution/blob/main/paper/The_Singularity_Has_a_Distribution.pdf">Paper</a><a href="https://github.com/xiaoyulics/singularity-distribution">Code</a><a href="#cite">Cite</a></nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>The singularity has a distribution.</h1>
+    <p class="lede">Automating AI research makes capability feed its own growth, and the standard feedback law blows up on one date. Let progress arrive as discrete ideas at random times instead, and that date becomes a random variable with an exact law.</p>
+    <div class="actions">
+      <a class="btn primary" href="https://github.com/xiaoyulics/singularity-distribution/blob/main/paper/The_Singularity_Has_a_Distribution.pdf">Read the paper (PDF)</a>
+      <a class="btn ghost" href="https://github.com/xiaoyulics/singularity-distribution">Code and data</a>
+      <a class="btn ghost" href="#roll">Roll a history</a>
+    </div>
+    <p class="authors"><b>Xiaoyu Li</b><sup>1</sup> · <b>Zheng Gao</b><sup>1</sup> · <b>Chiwun Yang</b><sup>2</sup> · <b>Zhizhou Sha</b><sup>3</sup><br>
+      <sup>1</sup>University of New South Wales &nbsp; <sup>2</sup>City University of Hong Kong &nbsp; <sup>3</sup>University of Texas at Austin</p>
+  </div>
+  <figure>
+    <img src="assets/hero.jpg" width="2300" height="920" alt="Left: 1,400 simulated histories drawn as light, each rising as a staircase of ideas and leaving the sky at its own explosion time, above a horizon glowing with the exact law of that time. Right: the same histories as stepped logarithmic spirals falling into one bright point.">
+    <figcaption>Outside view: 1,400 simulated histories, coloured by their explosion time, rise as staircases of ideas; the dashed curve is the deterministic law with its single date, and the horizon glows with the exact law of the date. Inside view: the same histories with radius equal to the time left and angle equal to capability, each a stepped logarithmic spiral into the singularity.</figcaption>
+  </figure>
+</header>
+
+<section class="paper" id="model">
+  <div class="wrap">
+    <h2>A smooth law gives one date. Random ideas give a law.</h2>
+    <p class="lead">Chan et al. (2026) model a software intelligence explosion with an idea production function under full automation. It reaches infinity at one finite time. We keep its drift and change one thing: progress comes as discrete improvements, each arriving after an exponential wait and multiplying capability by a factor.</p>
+    <div class="duel">
+      <div>
+        <h3>The feedback law</h3>
+        <div class="eq">$$\dot A = c\,A^{1+\varepsilon},\qquad \varepsilon=\lambda-\beta=\beta(r-1)$$</div>
+        <p>With the working paper's central values $\lambda=1.40$ and $\beta=1.01$, and capability doubling every 4.5 months at first, it blows up after</p>
+        <p class="big">16.6<small>months: one date, no spread</small></p>
+      </div>
+      <div>
+        <h3>The Good process</h3>
+        <div class="eq">$$\zeta=\sum_{n\ge0}\frac{e_n}{q_0\rho^{\,n}},\qquad e_n\sim\mathrm{Exp}(1),\ \ \rho=(1+h)^{\varepsilon}$$</div>
+        <p>For ideas of relative size $h$, the explosion time is a geometrically weighted sum of independent exponentials. For doubling-sized ideas its mean is 19.0 months, and 90% of it lies in</p>
+        <p class="big">9.7–31.9<small>months, 90% of the law</small></p>
+      </div>
+    </div>
+    <p class="note" style="margin-top:26px">All numbers on this page are illustrations under the paper's calibration (Box 1 of the paper), not forecasts of AI development.</p>
+  </div>
+</section>
+
+<section class="deep" id="roll">
+  <div class="wrap">
+    <h2>Roll your own singularity.</h2>
+    <p class="lead">Each roll simulates one history of the model, idea by idea, and records the moment it explodes. The histogram of your rolls builds up under the exact law. Smaller ideas give a tighter law; lumpier ideas spread the date out.</p>
+    <div class="controls" role="group" aria-label="Idea size">
+      <span style="color:var(--cream-2)">idea size $h$</span>
+      <div class="seg" id="hseg"></div>
+      <button class="btn primary" id="roll1">Roll a history</button>
+      <button class="btn ghost" id="roll200">Roll 200</button>
+      <button class="btn ghost" id="reset">Clear</button>
+    </div>
+    <div class="lab">
+      <div class="panel"><canvas id="path" width="1000" height="560" aria-label="The latest simulated history: capability in doublings against months"></canvas>
+        <p class="cap">Latest history: capability (doublings) against months. Dashed: the deterministic law.</p></div>
+      <div class="panel"><svg id="hist" viewBox="0 0 640 420" role="img" aria-label="Histogram of rolled explosion times with the exact density"></svg>
+        <p class="cap">Your rolls (bars) and the exact law of the explosion time (curve).</p></div>
+    </div>
+    <div class="readout">
+      <div><div class="v" id="r-last">–</div><div class="k">this history explodes at (months)</div></div>
+      <div><div class="v" id="r-n">0</div><div class="k">histories rolled; their mean <span id="r-mean">–</span></div></div>
+      <div><div class="v" id="r-law">19.0</div><div class="k">exact mean; 90% in <span id="r-int">[9.7, 31.9]</span></div></div>
+    </div>
+    <noscript><p class="note">This section needs JavaScript. The paper's Figure 2 shows the same law.</p></noscript>
+  </div>
+</section>
+
+<section class="paper" id="law">
+  <div class="wrap">
+    <div class="cols wide-left">
+      <div>
+        <h2>The threshold does not move. The date does.</h2>
+        <p class="lead">For every law of positive, independent idea sizes, the process explodes almost surely if $r&gt;1$ and never if $r\le1$. Randomness leaves the explosion criterion of the deterministic law intact and replaces its date by a distribution.</p>
+      </div>
+      <div class="tablewrap" style="margin-top:8px">
+        <table id="lawtable" aria-label="Exact law of the explosion time for several idea sizes">
+          <thead><tr><th>idea size $h$</th><th class="r">mean</th><th class="r">CV</th><th class="r">90% interval</th><th class="r">by 12 months</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <p class="note" style="margin-top:12px">Months, at equal local log drift ($\log 2/4.5$ per month). For $h=0.1$ the chance of exploding within a year is under 1%.</p>
+      </div>
+    </div>
+    <div class="sheet">
+      <div><h3>Laplace transform</h3><div class="eq">$$\mathbb E\,e^{-s\bar\zeta}=\frac{1}{(-s;q)_\infty},\qquad \bar\zeta=q_0\zeta,\ q=\rho^{-1}$$</div></div>
+      <div><h3>Moments count integer partitions</h3><div class="eq">$$\frac{\mathbb E\,\bar\zeta^{\,n}}{n!}=\frac{1}{(q;q)_n}=\sum_{m\ge0}p_{\le n}(m)\,q^m$$</div></div>
+      <div><h3>Mellin transform, entire in $s$</h3><div class="eq">$$\mathbb E\,\bar\zeta^{\,s}=\frac{\Gamma(1+s)\,(q^{1+s};q)_\infty}{(q;q)_\infty},\qquad \mathbb E\big[1/\bar\zeta\big]=\log\tfrac1q$$</div></div>
+      <div><h3>A slow takeoff needs only a slow first idea</h3><div class="eq">$$\mathbb P(\bar\zeta>t)\sim e^{-t}\sum_{m\ge0}p(m)\,q^m$$</div></div>
+      <div><h3>Lomax ideas give a Gamma date</h3><div class="eq">$$\log(1+H)\sim\mathrm{Exp}(b\varepsilon)\ \Longrightarrow\ \bar\zeta\sim\mathrm{Gamma}(b+1,1)$$</div></div>
+      <div><h3>Equal ideas are the most predictable</h3><p style="font-size:18px">Among all idea-size laws with the same standardised mean, the coefficient of variation is smallest when all ideas have the same size.</p></div>
+    </div>
+    <p class="note" style="margin-top:26px">Several of these identities are classical: the explosion time is an exponential functional of a Poisson process, studied in probability and in the analysis of AIMD congestion control (Bertoin, Biane and Yor; Guillemin, Robert and Zwart), and the small-time asymptotics are due to Borovkov and Ruzankin. The paper gives short self-contained proofs and reads them as statements about timing.</p>
+  </div>
+</section>
+
+<section id="midnight">
+  <div class="wrap">
+    <div class="midnight">
+      <div>
+        <h2>Midnight never gets closer in its own units.</h2>
+        <p class="lead">With parameters known, the time left at any moment, measured in the current expected waiting time, has the same law, whatever has happened so far. Forecasts shrink in calendar time, but their relative uncertainty never does.</p>
+        <p>For doubling-sized ideas the singularity is always expected</p>
+        <p class="big">4.22<small>current doubling times away</small></p>
+        <p class="note">90% predictive interval: 2.15 to 7.10 current doubling times. A response that needs a year and must be ready with 95% probability has to start while the doubling time is still at least 5.59 months.</p>
+      </div>
+      <img src="assets/spiral.jpg" width="940" height="860" alt="Stepped logarithmic spirals of many simulated histories winding into one bright point; three histories are traced brightly.">
+    </div>
+    <div class="figs3">
+      <div><h3>Self-similar residual time</h3><p class="note">At every stopping time τ, the product of the remaining time ζ − τ and the current idea rate has the law of the standardised explosion time, independent of the past.</p></div>
+      <div><h3>Log-periodic, but faint</h3><p class="note">Centred on the realised explosion time, ideas arrive log-periodically with harmonics exactly Γ(1 − 2πik/ℓ). For doubling-sized ideas the oscillation is about 3 × 10⁻¹⁵ of the mean.</p></div>
+      <div><h3>A retrospective statement</h3><p class="note">The explosion-centred picture needs the realised date, so it is an ensemble fact, not an online detector.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="paper" id="detect">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h2>Seeing it coming takes $n\propto\ell^{-2/3}$ ideas.</h2>
+        <p class="lead">An ideal monitor sees every idea, knows the current rate and the alternative, and must tell steady exponential progress from an accelerating one after the first $n$ ideas. The minimum fixed sample size is</p>
+        <div class="eq">$$n^\ast(\alpha,\ell)\sim\big(12\,z_\alpha^2\big)^{1/3}\,\ell^{-2/3},$$</div>
+        <p>with matching non-asymptotic bounds, where $\ell=\varepsilon\log(1+h)$ is the increase of the log-rate per idea and $z_\alpha$ is the upper-$\alpha$ normal quantile. Small ideas are distinguishable early in proportion; lumpy progress only at the last moment.</p>
+        <p class="note">A fixed-sample binary experiment with known baseline and known $\ell$; not an anytime alarm and not change-point detection.</p>
+      </div>
+      <div>
+        <div class="panel"><svg id="detchart" viewBox="0 0 600 380" role="img" aria-label="Exact minimum sample size times ell to the two thirds, against ell, with the asymptotic constant"></svg>
+          <p class="cap">Exact $n^\ast\ell^{2/3}$ (dots) and its limit $(12z_\alpha^2)^{1/3}\approx3.19$ at $\alpha=5\%$.</p></div>
+        <label for="ellslider" class="note" style="display:block;margin-top:22px">Choose an increment $\ell$</label>
+        <input type="range" id="ellslider" class="slider" min="0" max="9" step="1" value="3">
+        <div class="ticks"><span>ℓ = 0.001</span><span>ℓ = 1</span></div>
+        <div class="readout" style="margin-top:20px">
+          <div><div class="v" id="d-n">70</div><div class="k">ideas needed (exact)</div></div>
+          <div><div class="v" id="d-h">2.6%</div><div class="k">corresponding idea size $h$</div></div>
+          <div><div class="v" id="d-w">0.50</div><div class="k">remaining mean ÷ initial mean</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="tablewrap">
+      <table id="dettable" aria-label="Detection at the calibrated idea sizes">
+        <thead><tr><th>idea size $h$</th><th class="r">$n^\ast$</th><th class="r">decision after (months)</th><th class="r">time left, mean</th><th class="r">time left, 5–95%</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="deep" id="uncertain">
+  <div class="wrap">
+    <div class="cols wide-left">
+      <div class="panel"><svg id="tailchart" viewBox="0 0 640 420" role="img" aria-label="Survival function of the waiting time on log-log axes"></svg>
+        <p class="cap">Conditional on explosion. Blue: the deterministic waiting time mixed over an illustrative log-normal prior on $r$. Grey dashed: the exact $c/t$ limit. Orange: intrinsic randomness alone, $r$ known.</p></div>
+      <div>
+        <h2>Near $r=1$, the expected wait is infinite.</h2>
+        <p class="lead">If the returns parameter is uncertain with positive density at the critical value, the waiting time has a $1/t$ tail with an exact constant, so its conditional mean is infinite even though explosion is certain once $r&gt;1$.</p>
+        <div class="readout" style="grid-template-columns:1fr 1fr">
+          <div><div class="v">0.743</div><div class="k">P(r &gt; 1) under the prior</div></div>
+          <div><div class="v">17.3</div><div class="k">median wait (months)</div></div>
+          <div><div class="v">7.4%</div><div class="k">P(wait &gt; 10 years)</div></div>
+          <div><div class="v">∞</div><div class="k">mean wait</div></div>
+        </div>
+        <p class="note" style="margin-top:20px">The prior matches one 90% interval for $r$ reported in the working paper; it illustrates the theorem and is not a fitted forecast.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="paper" id="brakes">
+  <div class="wrap">
+    <h2>Delays, diversion and a race with oversight.</h2>
+    <p class="lead">Three separate extensions, each with its own model and its own scope.</p>
+    <div class="brakes">
+      <div class="brake">
+        <div class="txt"><h3>A deployment delay unfolds the singularity</h3>
+          <p>In the deterministic delayed-feedback model, any fixed delay $D&gt;0$ prevents blow-up, and growth becomes double exponential: $\log\log A(t)\sim t\log r/D$. With a three-month delay, $\log A$ doubles about every 6.4 months. The stochastic delayed model is proved not to explode.</p></div>
+        <div class="panel"><svg id="lagchart" viewBox="0 0 600 340" role="img" aria-label="Log capability against months for delays of 0, 1 and 3 months"></svg></div>
+      </div>
+      <div class="brake">
+        <div class="txt"><h3>Progressive diversion changes the threshold</h3>
+          <p>If the share of automated labour left to capabilities research falls like $(A/A_0)^{-\gamma}$, the explosion disappears exactly when $\gamma\ge1-1/r$, which is 0.28 at the central values: a diverted share of 47% at ten times today's capability and 85% at a thousand times. Removing the singularity is not, by itself, a statement that oversight keeps pace.</p></div>
+        <div class="panel"><svg id="divchart" viewBox="0 0 600 340" role="img" aria-label="Diverted share needed against capability multiple"></svg></div>
+      </div>
+      <div class="brake">
+        <div class="txt"><h3>Exponents decide the race, not the budget share</h3>
+          <p>In a deterministic race between capability $A$ and oversight $S$ with a fixed allocation share, the asymptotic regime of $S/A$ is set by the exponents of oversight research, except on the critical line $\varepsilon_S=\varepsilon$, where the share sets the limiting ratio. A fixed share still changes dates and finite-horizon outcomes.</p></div>
+        <div class="panel"><svg id="racechart" viewBox="0 0 600 340" role="img" aria-label="Phase diagram of the race regimes"></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="reproduce">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h2>Every number is computed, none is typed.</h2>
+        <p class="lead">The paper reads its numbers from macros written by the code. High-precision $q$-series with certified truncation, exact detection errors and fixed seeds make every table and figure reproducible.</p>
+        <pre>git clone https://github.com/xiaoyulics/singularity-distribution
+cd singularity-distribution
+pip install -r requirements.txt
+sh reproduce.sh</pre>
+      </div>
+      <div>
+        <h3 style="margin-top:8px"><span id="nchecks">52</span> checks, all passing</h3>
+        <ul class="checks">
+          <li>regression targets from an independent recomputation</li>
+          <li>precision doubling of every quantile and tail probability</li>
+          <li>normalisation to 10⁻³⁵¹ in the near-one regime</li>
+          <li>monotone distribution function, nonnegative density</li>
+          <li>moments by quadrature against n!/(q;q)ₙ</li>
+          <li>Monte Carlo cross-checks with standard errors</li>
+          <li>exact detection errors and their boundary pairs</li>
+          <li>Gamma example, Mellin coefficient, Pareto constant</li>
+          <li>grid refinement of the delay equation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="paper" id="cite">
+  <div class="wrap">
+    <h2>Cite</h2>
+    <pre id="bibtex">@misc{li2026singularity,
+  title  = {The Singularity Has a Distribution: Exact Timing Laws and
+            Detection Limits for a Stochastic Intelligence Explosion},
+  author = {Li, Xiaoyu and Gao, Zheng and Yang, Chiwun and Sha, Zhizhou},
+  year   = {2026},
+  note   = {Working paper},
+  url    = {https://github.com/xiaoyulics/singularity-distribution}
+}</pre>
+    <button class="copy" id="copybib">Copy BibTeX</button>
+    <p class="note" style="margin-top:28px">Correspondence: <a href="mailto:xiaoyulics@gmail.com">xiaoyulics@gmail.com</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="ruler"><svg id="footruler" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true"></svg></div>
+    <p>The ticks sit at 1 − q<sup>k</sup> with q = 2<sup>−0.39</sup>, the expected durations of successive doublings in the paper's calibration; they add up to a finite time. Numerical illustrations are not forecasts.</p>
+    <p><a href="https://github.com/xiaoyulics/singularity-distribution/blob/main/paper/The_Singularity_Has_a_Distribution.pdf">Paper (PDF)</a> · <a href="https://github.com/xiaoyulics/singularity-distribution">Code and data</a></p>
+  </div>
+</footer>
+<div class="tip" id="tip"></div>
+
+<script>
+(function(){
+"use strict";
+const D = window.PAPER, NS = "http://www.w3.org/2000/svg";
+const Q = Math.pow(2, -0.39);
+const tip = document.getElementById("tip");
+const fmt = (x, d=1) => Number(x).toFixed(d);
+
+/* ---------- q-ruler: progress clock and footer ---------- */
+function ruler(svg, H, ticks, tickH, marker){
+  svg.innerHTML = "";
+  const line = el("line", {x1:0, y1:H/2, x2:1000, y2:H/2, stroke:"#6b6b6b", "stroke-width":1, "vector-effect":"non-scaling-stroke"});
+  svg.appendChild(line);
+  for (let k=0;k<=ticks;k++){
+    const x = 1000*(1-Math.pow(Q,k)), h = tickH*(0.18+0.82*Math.pow(Q,k/2));
+    svg.appendChild(el("line",{x1:x,y1:H/2-h,x2:x,y2:H/2+h*0.15,stroke:"#8d877c","stroke-width":1,"vector-effect":"non-scaling-stroke"}));
+  }
+  svg.appendChild(el("circle",{cx:998,cy:H/2,r:3.2,fill:"#e0703a"}));
+  if (marker){ const m = el("circle",{cx:0,cy:H/2,r:4.5,fill:"#f2c27a",id:"clockmark"}); svg.appendChild(m); }
+}
+function el(tag, attrs, text){ const e=document.createElementNS(NS,tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text!=null) e.textContent=text; return e; }
+ruler(document.getElementById("clock"), 22, 18, 8, true);
+ruler(document.getElementById("footruler"), 60, 26, 26, false);
+const mark = document.getElementById("clockmark");
+function onScroll(){
+  const p = Math.min(1, Math.max(0, scrollY/(document.documentElement.scrollHeight-innerHeight)));
+  const K = 18, x = (1-Math.pow(Q, K*p))/(1-Math.pow(Q, K)); mark.setAttribute("cx", 2+996*x);
+}
+addEventListener("scroll", onScroll, {passive:true}); onScroll();
+
+/* ---------- tiny SVG chart helpers ---------- */
+function frame(svg, o){
+  const W = svg.viewBox.baseVal.width, H = svg.viewBox.baseVal.height;
+  const m = Object.assign({l:54,r:18,t:16,b:44}, o.margin||{});
+  const ink = o.ink || "#b8ad9b", grid = o.grid || "rgba(184,173,155,.18)";
+  const lx = o.logx, ly = o.logy;
+  const tx = v => lx ? Math.log10(v) : v, ty = v => ly ? Math.log10(v) : v;
+  const [x0,x1] = o.x.map(tx), [y0,y1] = o.y.map(ty);
+  const X = v => m.l + (tx(v)-x0)/(x1-x0)*(W-m.l-m.r);
+  const Y = v => H - m.b - (ty(v)-y0)/(y1-y0)*(H-m.t-m.b);
+  svg.innerHTML = "";
+  (o.xt||[]).forEach(v=>{ svg.appendChild(el("line",{x1:X(v),x2:X(v),y1:m.t,y2:H-m.b,stroke:grid}));
+    svg.appendChild(el("text",{x:X(v),y:H-m.b+19,fill:ink,"font-size":13,"text-anchor":"middle","font-family":"IBM Plex Sans"}, o.xf?o.xf(v):v)); });
+  (o.yt||[]).forEach(v=>{ svg.appendChild(el("line",{x1:m.l,x2:W-m.r,y1:Y(v),y2:Y(v),stroke:grid}));
+    svg.appendChild(el("text",{x:m.l-8,y:Y(v)+4,fill:ink,"font-size":13,"text-anchor":"end","font-family":"IBM Plex Sans"}, o.yf?o.yf(v):v)); });
+  if (o.xl) svg.appendChild(el("text",{x:(m.l+W-m.r)/2,y:H-6,fill:ink,"font-size":13,"text-anchor":"middle","font-family":"IBM Plex Sans"},o.xl));
+  if (o.yl) svg.appendChild(el("text",{x:14,y:(m.t+H-m.b)/2,fill:ink,"font-size":13,"text-anchor":"middle","font-family":"IBM Plex Sans",transform:`rotate(-90 14 ${(m.t+H-m.b)/2})`},o.yl));
+  return {X,Y,W,H,m};
+}
+function path(pts, X, Y){ let d="", pen=false; for (const [x,y] of pts){ if (y==null||!isFinite(y)){pen=false;continue;} d += (pen?"L":"M")+X(x).toFixed(1)+","+Y(y).toFixed(1); pen=true; } return d; }
+/* crosshair + tooltip; the state is re-read on every move, so charts can be redrawn freely */
+function hover(svg, state){
+  const W = svg.viewBox.baseVal.width;
+  svg.addEventListener("pointermove", ev=>{
+    const s = state(); if (!s) return;
+    const r = svg.getBoundingClientRect(), sx = (ev.clientX-r.left)/r.width*W;
+    let best=0, bd=1e9; s.xs.forEach((x,i)=>{ const d=Math.abs(s.f.X(x)-sx); if(d<bd){bd=d;best=i;} });
+    let v = svg.querySelector(".xh");
+    if (!v){ v = el("line",{class:"xh",stroke:"#f2c27a","stroke-width":1}); svg.appendChild(v); }
+    v.setAttribute("y1",s.f.m.t); v.setAttribute("y2",s.f.H-s.f.m.b);
+    v.setAttribute("x1",s.f.X(s.xs[best])); v.setAttribute("x2",s.f.X(s.xs[best])); v.setAttribute("opacity",.8);
+    tip.textContent = s.label(best); tip.style.opacity=1;
+    tip.style.left=Math.min(ev.clientX+14, innerWidth-tip.offsetWidth-8)+"px"; tip.style.top=(ev.clientY-38)+"px";
+  });
+  svg.addEventListener("pointerleave", ()=>{ const v=svg.querySelector(".xh"); if(v) v.setAttribute("opacity",0); tip.style.opacity=0; });
+}
+
+/* ---------- roll a history ---------- */
+const laws = D.laws, eps = D.eps, g = D.g;
+let cur = laws.findIndex(l=>l.h===1), rolls = [];
+const hseg = document.getElementById("hseg");
+laws.forEach((l,i)=>{ const b=document.createElement("button"); b.textContent = l.h<1 ? String(l.h) : String(l.h); b.setAttribute("aria-pressed", i===cur); b.onclick=()=>{cur=i; rolls=[]; [...hseg.children].forEach((c,j)=>c.setAttribute("aria-pressed", j===cur)); drawHist(); drawPath(null); updateLaw();}; hseg.appendChild(b); });
+function simulate(l){
+  const q0 = g/Math.log1p(l.h), rho = Math.pow(1+l.h, eps), step = Math.log2(1+l.h);
+  let t=0, k=0; const T=[0], Y=[0];
+  while (true){
+    const rate = q0*Math.pow(rho,k), w = -Math.log(1-Math.random())/rate;
+    t += w; k++; T.push(t); Y.push(k*step);
+    if (1/rate < 1e-7 || k>6000) break;
+  }
+  return {T,Y,zeta:t};
+}
+const cv = document.getElementById("path"), cx = cv.getContext("2d");
+let anim = null;
+function drawPath(h, upto){
+  const W=cv.width, H=cv.height, m={l:60,r:20,t:20,b:52}, TM=40, YM=12;
+  const X=t=>m.l+t/TM*(W-m.l-m.r), Y=y=>H-m.b-y/YM*(H-m.t-m.b);
+  cx.clearRect(0,0,W,H);
+  cx.font="22px IBM Plex Sans"; cx.fillStyle="#b8ad9b"; cx.strokeStyle="rgba(184,173,155,.18)"; cx.lineWidth=1;
+  for (let t=0;t<=TM;t+=10){ cx.beginPath(); cx.moveTo(X(t),m.t); cx.lineTo(X(t),H-m.b); cx.stroke(); cx.textAlign="center"; cx.fillText(t, X(t), H-m.b+30); }
+  for (let y=0;y<=YM;y+=4){ cx.beginPath(); cx.moveTo(m.l,Y(y)); cx.lineTo(W-m.r,Y(y)); cx.stroke(); cx.textAlign="right"; cx.fillText(y, m.l-10, Y(y)+7); }
+  // deterministic law (dashed): 1 - t/T* = 10^(-6i/400), dense near the blow-up
+  const Ts = 1/(eps*g); cx.setLineDash([9,8]); cx.strokeStyle="#9fbde6"; cx.lineWidth=2.4; cx.beginPath();
+  for (let i=0;i<=400;i++){ const tt=Ts*(1-Math.pow(10,-6*i/400)); const y=-Math.log2(1-tt/Ts)/eps; i?cx.lineTo(X(tt),Y(y)):cx.moveTo(X(tt),Y(y)); if (y>YM+1) break; }
+  cx.stroke(); cx.setLineDash([]);
+  if (!h) return;
+  const n = upto==null ? h.T.length : upto;
+  cx.strokeStyle="#f2c27a"; cx.lineWidth=3; cx.lineJoin="round"; cx.beginPath(); cx.moveTo(X(0),Y(0));
+  for (let k=0;k<n-1;k++){ cx.lineTo(X(h.T[k+1]),Y(h.Y[k])); cx.lineTo(X(h.T[k+1]),Y(h.Y[k+1])); if (h.Y[k+1]>YM+1) break; }
+  cx.stroke();
+  if (upto==null || upto>=h.T.length){
+    cx.strokeStyle="#e0703a"; cx.lineWidth=2; cx.beginPath(); cx.moveTo(X(h.zeta),m.t); cx.lineTo(X(h.zeta),H-m.b); cx.stroke();
+    cx.fillStyle="#e0703a"; cx.textAlign= h.zeta>TM-8 ? "right":"left"; cx.font="24px IBM Plex Sans";
+    if (h.zeta<=TM) cx.fillText("ζ = "+fmt(h.zeta)+" mo", X(h.zeta)+(h.zeta>TM-8?-10:10), m.t+26);
+  }
+}
+const hist = document.getElementById("hist");
+function drawHist(){
+  const l = laws[cur];
+  const ymax = Math.max(...l.density)*1.25;
+  const f = frame(hist, {x:[0,70], y:[0,ymax], xt:[0,10,20,30,40,50,60,70], yt:[], xl:"explosion time ζ (months)", margin:{l:20}});
+  // bars
+  const bw = l.h<=0.25 ? 0.5 : 1, nb = Math.round(70/bw), cnt = new Array(nb).fill(0);
+  rolls.forEach(z=>{ const i=Math.floor(z/bw); if(i>=0&&i<nb) cnt[i]++; });
+  cnt.forEach((c,i)=>{ if(!c) return; const d=c/(rolls.length*bw); const y=Math.min(d,ymax);
+    hist.appendChild(el("rect",{x:f.X(i*bw)+0.5,y:f.Y(y),width:Math.max(1,f.X(bw)-f.X(0)-1),height:f.Y(0)-f.Y(y),fill:"#3987e5",opacity:.85,rx:1})); });
+  const pts = D.grid.map((t,i)=>[t,l.density[i]]);
+  hist.appendChild(el("path",{d:path(pts,f.X,f.Y),fill:"none",stroke:"#f2c27a","stroke-width":2.6}));
+  const Ts=1/(eps*g); hist.appendChild(el("line",{x1:f.X(Ts),x2:f.X(Ts),y1:f.m.t,y2:f.H-f.m.b,stroke:"#9fbde6","stroke-dasharray":"6 6","stroke-width":1.6}));
+  hist.appendChild(el("text",{x:f.X(Ts)+6,y:f.m.t+14,fill:"#9fbde6","font-size":13,"font-family":"IBM Plex Sans"},"deterministic date 16.6"));
+  histState = {f, xs:D.grid, label:i=>`t = ${D.grid[i]} months · exact density ${l.density[i].toFixed(4)}`};
+}
+let histState = null; hover(hist, ()=>histState);
+function updateLaw(){
+  const l=laws[cur];
+  document.getElementById("r-law").textContent = fmt(l.mean);
+  document.getElementById("r-int").textContent = `[${fmt(l.q05)}, ${fmt(l.q95)}]`;
+  document.getElementById("r-n").textContent = rolls.length;
+  document.getElementById("r-mean").textContent = rolls.length ? fmt(rolls.reduce((a,b)=>a+b,0)/rolls.length) : "–";
+}
+function rollOne(animate){
+  const h = simulate(laws[cur]); rolls.push(h.zeta);
+  document.getElementById("r-last").textContent = fmt(h.zeta);
+  updateLaw(); drawHist();
+  if (anim) cancelAnimationFrame(anim);
+  if (!animate || matchMedia("(prefers-reduced-motion: reduce)").matches){ drawPath(h); return; }
+  // number of steps until the history leaves the frame (13 doublings or 40 months)
+  let vis = h.T.length; for (let k=0;k<h.T.length;k++){ if (h.Y[k]>13 || h.T[k]>40){ vis=k+1; break; } }
+  const start = performance.now(), dur = 1400;
+  const tick = now => { const p=Math.min(1,(now-start)/dur), eased=1-Math.pow(1-p,2);
+    if (p<1){ drawPath(h, Math.max(2, Math.ceil(eased*vis))); anim=requestAnimationFrame(tick); } else drawPath(h); };
+  anim = requestAnimationFrame(tick);
+}
+document.getElementById("roll1").onclick = ()=>rollOne(true);
+document.getElementById("roll200").onclick = ()=>{ for(let i=0;i<199;i++){ rolls.push(simulate(laws[cur]).zeta); } rollOne(false); };
+document.getElementById("reset").onclick = ()=>{ rolls=[]; document.getElementById("r-last").textContent="–"; drawHist(); drawPath(null); updateLaw(); };
+drawPath(null); drawHist(); updateLaw();
+
+/* ---------- law table ---------- */
+const lt = document.querySelector("#lawtable tbody");
+laws.filter(l=>[0.1,0.25,1,9].includes(l.h)).forEach(l=>{
+  const p = l.p12<0.001 ? "&lt; 0.1%" : (100*l.p12).toFixed(1)+"%";
+  lt.insertAdjacentHTML("beforeend", `<tr><td>${l.h}</td><td class="r">${fmt(l.mean)}</td><td class="r">${fmt(l.cv,3)}</td><td class="r">${fmt(l.q05)}–${fmt(l.q95)}</td><td class="r">${p}</td></tr>`);
+});
+
+/* ---------- detection ---------- */
+const grid = D.nstar_grid; // [ell, n*]
+const det = document.getElementById("detchart");
+function drawDet(sel){
+  const f = frame(det,{x:[0.0008,1.25], y:[0,6], logx:true, xt:[0.001,0.01,0.1,1], yt:[0,1,2,3,4,5,6], xf:v=>"ℓ = "+v, xl:"log-rate increment per idea ℓ (log scale)", yl:"n*·ℓ^(2/3)", ink:"#4a4740", grid:"rgba(74,71,64,.14)"});
+  const lan = D.lan;
+  det.appendChild(el("line",{x1:f.X(0.0008),x2:f.X(1.25),y1:f.Y(lan),y2:f.Y(lan),stroke:"#2a78d6","stroke-width":2}));
+  det.appendChild(el("text",{x:f.X(0.0011),y:f.Y(lan)+22,fill:"#2a78d6","font-size":13,"font-family":"IBM Plex Sans"},"limit (12 z²)^(1/3) ≈ 3.19"));
+  grid.forEach(([l,n],i)=>{ const c=el("circle",{cx:f.X(l),cy:f.Y(n*Math.pow(l,2/3)),r:i===sel?8:5.5,fill:i===sel?"#b5441d":"#fbf8f2",stroke:"#b5441d","stroke-width":2}); det.appendChild(c); });
+}
+const sl = document.getElementById("ellslider");
+function updDet(){
+  const i = +sl.value, [l,n] = grid[i];
+  const h = Math.exp(l/eps)-1;
+  document.getElementById("d-n").textContent = n;
+  document.getElementById("d-h").textContent = h<1 ? (100*h).toFixed(h<0.1?1:0)+"%" : (h<10?h.toFixed(1):h.toFixed(0))+"×";
+  document.getElementById("d-w").textContent = Math.exp(-l*n).toFixed(2);
+  sl.setAttribute("aria-valuetext", `ell = ${l}, n* = ${n}`);
+  drawDet(i);
+}
+sl.max = grid.length-1; sl.oninput = updDet; updDet();
+const dtb = document.querySelector("#dettable tbody");
+D.table3.forEach(r=>{ dtb.insertAdjacentHTML("beforeend", `<tr><td>${r.h}</td><td class="r">${r.nstar}</td><td class="r">${fmt(r.ET_nstar)}</td><td class="r">${fmt(r.Erem,2)}</td><td class="r">${fmt(r.RemQ05,2)}–${fmt(r.RemQ95,2)}</td></tr>`); });
+
+/* ---------- uncertainty tail ---------- */
+(function(){
+  const s = document.getElementById("tailchart"), P = D.prior;
+  const f = frame(s,{x:[1,2000], y:[1e-3,1.2], logx:true, logy:true, xt:[1,10,100,1000], yt:[0.001,0.01,0.1,1], yf:v=>v, xl:"t (months)", yl:"P(wait > t | r > 1)"});
+  s.appendChild(el("path",{d:path(P.t.map((t,i)=>[t,Math.min(1,P.c/t)]),f.X,f.Y),stroke:"#8d877c","stroke-dasharray":"7 6","stroke-width":1.8,fill:"none"}));
+  s.appendChild(el("path",{d:path(P.t.map((t,i)=>[t,P.intrinsic[i]!=null&&P.intrinsic[i]>1e-3?P.intrinsic[i]:null]),f.X,f.Y),stroke:"#d95926","stroke-width":2.4,fill:"none"}));
+  s.appendChild(el("path",{d:path(P.t.map((t,i)=>[t,P.fluid[i]]),f.X,f.Y),stroke:"#3987e5","stroke-width":2.8,fill:"none"}));
+  s.appendChild(el("text",{x:f.X(220),y:f.Y(0.06),fill:"#3987e5","font-size":14,"font-family":"IBM Plex Sans"},"r uncertain"));
+  s.appendChild(el("text",{x:f.X(48),y:f.Y(0.0016),fill:"#d95926","font-size":14,"font-family":"IBM Plex Sans"},"r known"));
+  const st = {f, xs:P.t, label:i=>`t = ${P.t[i].toFixed(1)} months · r uncertain: ${P.fluid[i].toFixed(3)}${P.intrinsic[i]!=null?" · r known: "+P.intrinsic[i].toExponential(1):""}`};
+  hover(s, ()=>st);
+})();
+
+/* ---------- delay ---------- */
+(function(){
+  const s = document.getElementById("lagchart"), Ts=1/(eps*g);
+  const f = frame(s,{x:[0,60], y:[0.05,1000], logy:true, xt:[0,10,20,30,40,50,60], yt:[0.1,1,10,100,1000], yf:v=>v, xl:"months", yl:"log(A/A₀)", ink:"#4a4740", grid:"rgba(74,71,64,.14)"});
+  const ode=[]; for(let i=1;i<=300;i++){ const t=Ts*i/300*0.99999; ode.push([t,-Math.log(1-eps*g*t)/eps]); }
+  s.appendChild(el("path",{d:path(ode,f.X,f.Y),stroke:"#16181f","stroke-dasharray":"6 5","stroke-width":2,fill:"none"}));
+  [["1","#eb6834"],["3","#2a78d6"]].forEach(([k,c])=>s.appendChild(el("path",{d:path(D.lag[k].filter(p=>p[0]>0.05),f.X,f.Y),stroke:c,"stroke-width":2.6,fill:"none"})));
+  s.appendChild(el("text",{x:f.X(17.5),y:f.Y(300),fill:"#16181f","font-size":13,"font-family":"IBM Plex Sans"},"no delay: blow-up"));
+  s.appendChild(el("text",{x:f.X(41),y:f.Y(180),fill:"#b5441d","font-size":13,"font-family":"IBM Plex Sans"},"D = 1 month"));
+  s.appendChild(el("text",{x:f.X(46),y:f.Y(12),fill:"#2a78d6","font-size":13,"font-family":"IBM Plex Sans"},"D = 3 months"));
+})();
+
+/* ---------- diversion ---------- */
+(function(){
+  const s = document.getElementById("divchart"), gs = D.diversion.gamma_star;
+  const f = frame(s,{x:[1,1e4], y:[0,1], logx:true, xt:[1,10,100,1000,10000], yt:[0,0.25,0.5,0.75,1], xf:v=>v+"×", yf:v=>Math.round(v*100)+"%", xl:"capability relative to today", yl:"diverted share", ink:"#4a4740", grid:"rgba(74,71,64,.14)"});
+  const pts=[]; for(let i=0;i<=200;i++){ const a=Math.pow(10,4*i/200); pts.push([a,1-Math.pow(a,-gs)]); }
+  s.appendChild(el("path",{d:path(pts,f.X,f.Y)+`L${f.X(1e4)},${f.Y(1)}L${f.X(1)},${f.Y(1)}Z`,fill:"rgba(25,158,112,.14)",stroke:"none"}));
+  s.appendChild(el("path",{d:path(pts,f.X,f.Y),stroke:"#1b7f5c","stroke-width":2.6,fill:"none"}));
+  [[10,D.diversion.share_10],[1000,D.diversion.share_1000]].forEach(([a,v])=>{ s.appendChild(el("circle",{cx:f.X(a),cy:f.Y(v),r:5,fill:"#1b7f5c"})); s.appendChild(el("text",{x:f.X(a)+9,y:f.Y(v)+18,fill:"#16181f","font-size":13,"font-family":"IBM Plex Sans"},Math.round(v*100)+"% at "+a+"×")); });
+  s.appendChild(el("text",{x:f.X(1.4),y:f.Y(0.86),fill:"#1b7f5c","font-size":13,"font-family":"IBM Plex Sans"},"enough to defuse: share ≥ 1 − (A/A₀)^(−0.28)"));
+})();
+
+/* ---------- race regimes ---------- */
+(function(){
+  const s = document.getElementById("racechart"), e0 = eps;
+  const f = frame(s,{x:[0,2.4], y:[0,2], xt:[0,0.5,1,1.5,2], yt:[0,0.5,1,1.5,2], xl:"oversight returns to labour λ_S", yl:"oversight difficulty growth β_S", ink:"#4a4740", grid:"rgba(74,71,64,.10)"});
+  const poly = (pts,fill)=>s.appendChild(el("path",{d:"M"+pts.map(p=>f.X(p[0])+","+f.Y(p[1])).join("L")+"Z",fill,stroke:"none"}));
+  poly([[0,0],[e0,0],[e0,2],[0,2]],"rgba(235,104,52,.16)");
+  poly([[e0,0],[2.4,0],[2.4,2],[e0+2,2]],"rgba(25,158,112,.16)");
+  poly([[e0,0],[e0+2,2],[e0,2]],"rgba(57,135,229,.12)");
+  s.appendChild(el("line",{x1:f.X(e0),y1:f.Y(0),x2:f.X(Math.min(2.4,e0+2)),y2:f.Y(Math.min(2,2.4-e0)),stroke:"#16181f","stroke-width":2}));
+  s.appendChild(el("line",{x1:f.X(e0),y1:f.Y(0),x2:f.X(e0),y2:f.Y(2),stroke:"#4a4740","stroke-width":1.4}));
+  const t=(x,y,str,c)=>s.appendChild(el("text",{x:f.X(x),y:f.Y(y),fill:c||"#16181f","font-size":13,"font-family":"IBM Plex Sans"},str));
+  t(0.03,1.6,"S stays"); t(0.03,1.48,"bounded");
+  t(0.55,1.75,"S/A → 0"); t(1.65,0.35,"S/A → ∞"); t(1.62,1.62,"critical line:","#4a4740"); t(1.62,1.5,"the share matters","#4a4740");
+})();
+
+/* ---------- bibtex copy ---------- */
+document.getElementById("copybib").onclick = async (e)=>{ try{ await navigator.clipboard.writeText(document.getElementById("bibtex").textContent); e.target.textContent="Copied"; setTimeout(()=>e.target.textContent="Copy BibTeX",1600);}catch(_){ e.target.textContent="Select and copy"; } };
+document.getElementById("nchecks").textContent = D.checks;
+
+/* ---------- math ---------- */
+addEventListener("load", ()=>{ if (window.renderMathInElement) renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:true},{left:"$",right:"$",display:false}],throwOnError:false}); });
+})();
+</script>
+</body>
+</html>
