@@ -167,7 +167,7 @@ footer p{font-family:var(--sans);font-size:14px;color:var(--cream-2)}
   <div class="wrap">
     <span class="name">The Singularity Has a Distribution</span>
     <svg id="clock" viewBox="0 0 1000 22" preserveAspectRatio="none" aria-hidden="true"></svg>
-    <nav><a href="https://github.com/xiaoyulics/singularity-distribution/blob/main/paper/The_Singularity_Has_a_Distribution.pdf">Paper</a><a href="https://github.com/xiaoyulics/singularity-distribution">Code</a><a href="#cite">Cite</a></nav>
+    <nav><a href="https://arxiv.org/abs/2610.18445">arXiv</a><a href="https://github.com/xiaoyulics/singularity-distribution">Code</a><a href="#cite">Cite</a></nav>
   </div>
 </div>
 
@@ -176,7 +176,7 @@ footer p{font-family:var(--sans);font-size:14px;color:var(--cream-2)}
     <h1>The singularity has a distribution.</h1>
     <p class="lede">Automating AI research makes capability feed its own growth, and the standard feedback law blows up on one date. Let progress arrive as discrete ideas at random times instead, and that date becomes a random variable with an exact law.</p>
     <div class="actions">
-      <a class="btn primary" href="https://github.com/xiaoyulics/singularity-distribution/blob/main/paper/The_Singularity_Has_a_Distribution.pdf">Read the paper (PDF)</a>
+      <a class="btn primary" href="https://arxiv.org/abs/2610.18445">Read on arXiv</a>
       <a class="btn ghost" href="https://github.com/xiaoyulics/singularity-distribution">Code and data</a>
       <a class="btn ghost" href="#roll">Roll a history</a>
     </div>
@@ -364,8 +364,8 @@ footer p{font-family:var(--sans);font-size:14px;color:var(--cream-2)}
   <div class="wrap">
     <div class="cols">
       <div>
-        <h2>Every number is computed, none is typed.</h2>
-        <p class="lead">The paper reads its numbers from macros written by the code. High-precision $q$-series with certified truncation, exact detection errors and fixed seeds make every table and figure reproducible.</p>
+        <h2>Reproduce</h2>
+        <p class="lead">The code computes the tables and figures of the paper: high-precision $q$-series, exact fixed-sample detection errors and seeded simulations.</p>
         <pre>git clone https://github.com/xiaoyulics/singularity-distribution
 cd singularity-distribution
 pip install -r requirements.txt
@@ -393,12 +393,14 @@ sh reproduce.sh</pre>
   <div class="wrap">
     <h2>Cite</h2>
     <pre id="bibtex">@misc{li2026singularity,
-  title  = {The Singularity Has a Distribution: Exact Timing Laws and
-            Detection Limits for a Stochastic Intelligence Explosion},
-  author = {Li, Xiaoyu and Gao, Zheng and Yang, Chiwun and Sha, Zhizhou},
-  year   = {2026},
-  note   = {Working paper},
-  url    = {https://github.com/xiaoyulics/singularity-distribution}
+  title         = {The Singularity Has a Distribution: Exact Timing Laws and
+                   Detection Limits for a Stochastic Intelligence Explosion},
+  author        = {Li, Xiaoyu and Gao, Zheng and Yang, Chiwun and Sha, Zhizhou},
+  year          = {2026},
+  eprint        = {2610.18445},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI},
+  url           = {https://arxiv.org/abs/2610.18445}
 }</pre>
     <button class="copy" id="copybib">Copy BibTeX</button>
     <p class="note" style="margin-top:28px">Correspondence: <a href="mailto:xiaoyulics@gmail.com">xiaoyulics@gmail.com</a></p>
@@ -409,7 +411,7 @@ sh reproduce.sh</pre>
   <div class="wrap">
     <div class="ruler"><svg id="footruler" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true"></svg></div>
     <p>The ticks sit at 1 − q<sup>k</sup> with q = 2<sup>−0.39</sup>, the expected durations of successive doublings in the paper's calibration; they add up to a finite time. Numerical illustrations are not forecasts.</p>
-    <p><a href="https://github.com/xiaoyulics/singularity-distribution/blob/main/paper/The_Singularity_Has_a_Distribution.pdf">Paper (PDF)</a> · <a href="https://github.com/xiaoyulics/singularity-distribution">Code and data</a></p>
+    <p><a href="https://arxiv.org/abs/2610.18445">arXiv:2610.18445</a> · <a href="https://arxiv.org/pdf/2610.18445">PDF</a> · <a href="https://github.com/xiaoyulics/singularity-distribution">Code and data</a></p>
   </div>
 </footer>
 <div class="tip" id="tip"></div>

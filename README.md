@@ -11,9 +11,14 @@
 </p>
 
 <p align="center">
-  <a href="paper/The_Singularity_Has_a_Distribution.pdf"><b>Paper (PDF)</b></a> &nbsp;·&nbsp;
+  <a href="https://arxiv.org/abs/2610.18445"><img src="https://img.shields.io/badge/arXiv-2610.18445-b31b1b.svg" alt="arXiv:2610.18445"></a>
+</p>
+
+<p align="center">
+  <a href="https://arxiv.org/abs/2610.18445"><b>arXiv</b></a> &nbsp;·&nbsp;
+  <a href="https://arxiv.org/pdf/2610.18445"><b>PDF</b></a> &nbsp;·&nbsp;
   <a href="https://xiaoyulics.com/singularity-distribution/"><b>Interactive project page</b></a> &nbsp;·&nbsp;
-  <a href="#reproduce-every-number"><b>Reproduce</b></a> &nbsp;·&nbsp;
+  <a href="#reproduce"><b>Reproduce</b></a> &nbsp;·&nbsp;
   <a href="#citation"><b>Cite</b></a>
 </p>
 
@@ -71,9 +76,9 @@ Central values $\lambda=1.40$, $\beta=1.01$ from Chan et al. (2026), and capabil
 
 The [project page](https://xiaoyulics.com/singularity-distribution/) makes these interactive: roll your own histories and watch them fill the exact law, or move the idea size and read off the detection threshold.
 
-## Reproduce every number
+## Reproduce
 
-No number in the paper is typed by hand: `code/make_numbers.py` writes them all as LaTeX macros, which the manuscript reads.
+The scripts below compute the tables and figures of the paper.
 
 ```sh
 git clone https://github.com/xiaoyulics/singularity-distribution
@@ -102,12 +107,14 @@ The model is deliberately minimal: independent, positive improvements, exponenti
 
 ```bibtex
 @misc{li2026singularity,
-  title  = {The Singularity Has a Distribution: Exact Timing Laws and
-            Detection Limits for a Stochastic Intelligence Explosion},
-  author = {Li, Xiaoyu and Gao, Zheng and Yang, Chiwun and Sha, Zhizhou},
-  year   = {2026},
-  note   = {Working paper},
-  url    = {https://github.com/xiaoyulics/singularity-distribution}
+  title         = {The Singularity Has a Distribution: Exact Timing Laws and
+                   Detection Limits for a Stochastic Intelligence Explosion},
+  author        = {Li, Xiaoyu and Gao, Zheng and Yang, Chiwun and Sha, Zhizhou},
+  year          = {2026},
+  eprint        = {2610.18445},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI},
+  url           = {https://arxiv.org/abs/2610.18445}
 }
 ```
 
